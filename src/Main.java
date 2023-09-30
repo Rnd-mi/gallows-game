@@ -28,7 +28,11 @@ public class Main {
             while (true) {
                 System.out.println(encodedWord);
                 System.out.println("Количество ошибок - " + mistakes);
-                askValidInput();
+                String guess = askValidInput();
+                if (checkIfUserIsRight(guess)) {
+                    openCharacter(guess);
+                }
+
                 break;
             }
         }
@@ -43,9 +47,9 @@ public class Main {
     public static boolean loopMenu() {
         while (true) {
             String choice = printMenu();
-            if (choice.equals("Y")) {
+            if (choice.equalsIgnoreCase("Y")) {
                 return true;
-            } else if (choice.equals("E")) {
+            } else if (choice.equalsIgnoreCase("E")) {
                 return false;
             }
         }
@@ -80,6 +84,33 @@ public class Main {
         char[] asterisks = new char[word.length()];
         Arrays.fill(asterisks, '*');
         encodedWord = new String(asterisks);
+    }
+
+    public static boolean checkIfUserIsRight(String str) {
+        return word.contains(str);
+    }
+
+    public static void openCharacter(String str) {
+        if (str.equals(word))
+            encodedWord = word;
+        else if (str.length() != word.length()) {
+            Set<Integer> idxs = new HashSet<>();
+            char c = word.toCharArray()[0];
+            for (int i = 0; i < word.length(); i++) {
+                if (c == word.charAt(i)) {
+                    idxs.add(i);
+                }
+            }
+            StringBuilder newEncoded = new StringBuilder();
+            for (int i = 0; i < encodedWord.length(); i++) {
+
+                for (Integer idx : idxs) {
+                    if (i == idx) {
+                        newEncoded.append(c);
+                    }
+                }
+            }
+        }
     }
 
     public static String askValidInput() {
