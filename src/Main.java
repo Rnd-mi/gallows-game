@@ -28,6 +28,7 @@ public class Main {
             while (true) {
                 System.out.println(encodedWord);
                 System.out.println("Количество ошибок - " + mistakes);
+                askValidInput();
                 break;
             }
         }
@@ -81,25 +82,32 @@ public class Main {
         encodedWord = new String(asterisks);
     }
 
-    public char inputCharacter() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите букву");
-        String str = scanner.nextLine();
-
+    public static String askValidInput() {
         while (true) {
-            if (str.length() > 1) {
-                System.out.println("Требуется одна буква");
+            Scanner scanner = new Scanner(System.in);
+            String str = scanner.nextLine();
+            if (!(str.length() == 1 || str.length() == word.length())) {
+                System.out.println("Требуется одна буква либо все слово полностью");
                 continue;
             }
-            char c = str.toCharArray()[0];
-
-            if (!Character.isAlphabetic(c) || Character.isUpperCase(c)) {
-                System.out.println("Ошибка ввода: требуется буква в нижнем регистре");
-                str = scanner.nextLine();
-                continue;
-            }
-            return c;
+            char[] chars = str.toCharArray();
+            if (checkStrValidity(chars))
+                return String.valueOf(chars);
         }
+    }
+
+    public static boolean checkStrValidity(char[] chars) {
+        for (char c : chars) {
+            if (Character.isUpperCase(c)) {
+                System.out.println("Ошибка ввода: буква / слово должны быть в нижнем регистре");
+                return false;
+            }
+            if (!Character.isAlphabetic(c)) {
+                System.out.println("Ошибка ввода: требуется буква / слово");
+                return false;
+            }
+        }
+        return true;
     }
 
     public static String renderGameState() {
