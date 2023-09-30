@@ -1,17 +1,53 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     private static final String PATH = "dictionary.txt";
+    private static final Scanner scan = new Scanner(System.in);
     private static List<String> dict = new ArrayList<>();
     private static final int DICT_LEN = 51302;
     private static String gameStatePicture;
+    private static String word;
+    private static String encodedWord;
+    private static int mistakes;
 
     public static void main(String[] args) {
-//        createDictionary();
+        createDictionary();
+        game();
+    }
+
+    public static void game() {
+        if (loopMenu()) {
+            // выбираем слово из словаря, шифруем его,
+            // а также обнуляем количество ошибок
+            chooseWordForGame();
+            encode();
+            mistakes = 0;
+            System.out.println("Введите слово полностью, либо попробуйте угадать букву");
+
+            while (true) {
+                System.out.println(encodedWord);
+                System.out.println("Количество ошибок - " + mistakes);
+                break;
+            }
+        }
+    }
+
+    public static String printMenu() {
+        System.out.println("Чтобы начать игру, введите [Y]\n" +
+                "Чтобы выйти - [E]");
+        return scan.nextLine();
+    }
+
+    public static boolean loopMenu() {
+        while (true) {
+            String choice = printMenu();
+            if (choice.equals("Y")) {
+                return true;
+            } else if (choice.equals("E")) {
+                return false;
+            }
+        }
     }
 
     public static void createDictionary() {
@@ -34,9 +70,15 @@ public class Main {
         }
     }
 
-    public static String getWord() {
+    public static void chooseWordForGame() {
         Random rand = new Random();
-        return dict.get(rand.nextInt(DICT_LEN));
+        word = dict.get(rand.nextInt(DICT_LEN));
+    }
+
+    public static void encode() {
+        char[] asterisks = new char[word.length()];
+        Arrays.fill(asterisks, '*');
+        encodedWord = new String(asterisks);
     }
 
     public char inputCharacter() {
@@ -60,8 +102,8 @@ public class Main {
         }
     }
 
-    public static String renderGameState(int gameState) {
-        switch (gameState) {
+    public static String renderGameState() {
+        switch (mistakes) {
             case 1:
                 gameStatePicture = "    |\n   / \\";
                 break;
