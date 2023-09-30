@@ -8,9 +8,10 @@ public class Main {
     private static final String PATH = "dictionary.txt";
     private static List<String> dict = new ArrayList<>();
     private static final int DICT_LEN = 51302;
+    private static String gameStatePicture;
 
     public static void main(String[] args) {
-        createDictionary();
+//        createDictionary();
     }
 
     public static void createDictionary() {
@@ -59,5 +60,56 @@ public class Main {
         }
     }
 
-
+    public static String renderGameState(int gameState) {
+        switch (gameState) {
+            case 1:
+                gameStatePicture = "    |\n   / \\";
+                break;
+            case 2:
+                gameStatePicture = """
+                            |
+                            |
+                            |
+                            |
+                           / \\\
+                        """;
+                break;
+            case 3:
+                gameStatePicture = """
+                            |
+                            |
+                            |
+                            |
+                            |
+                            |
+                           / \\\
+                        """;
+                break;
+            case 4:
+                gameStatePicture = """
+                             _____
+                            |     |
+                            |
+                            |
+                            |
+                            |
+                            |
+                           / \\\
+                        """;
+                break;
+            case 5:
+                gameStatePicture = """
+                             _____
+                            |     |
+                            |   \\ o /
+                            |    ( )
+                            |    / \\
+                            |
+                            |
+                            |
+                           / \\\
+                        """;
+        }
+        return gameStatePicture;
+    }
 }
