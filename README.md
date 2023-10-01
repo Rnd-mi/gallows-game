@@ -12,8 +12,8 @@ Rules:
 
 
 Player sees the encoded word and need to pick a letter to try.
-Player can make 4 mistakes. 5th mistake will to lead to a loss.
-It is also possible for player to try a whole word if they have a suggestion.
+Player can make total of 4 mistakes. 5th mistake will to lead to a loss.
+It is also possible for player to try to guess a whole word if they have a suggestion.
 As game goes on and player keeps doing mistakes, the 'gallows' picture is 
 showing up in more complete way.
 Final picture when player has lost:
